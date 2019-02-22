@@ -1,7 +1,8 @@
 itemsArr = JSON.parse(localStorage.getItem('itemsArr')) || [];
 const uList = document.querySelector('.plates');
 const inputForm = document.querySelector('.add-items');
-
+const parag = document.querySelector('.wrapper p');
+// const clearBut = document.querySelector('.clearButton');
 
 function addItem(a) {
     a.preventDefault();
@@ -25,6 +26,9 @@ function populateList(anyArr = [], anyUl) {
         </li>
         `;
     }).join('');
+    
+    if (anyArr.length > 0) {
+        parag.innerHTML = `<button class='clearButton'></button> Clear selection`;}
 }
 
 function toggleDone(a) {
@@ -35,7 +39,17 @@ function toggleDone(a) {
     populateList(itemsArr, uList);
 }
 
+function clearSelection(a) {
+    if(!a.target.matches('button')) return;
+    itemsArr.forEach(element => {
+        element.done = false;
+    });
+    localStorage.setItem('itemsArr', JSON.stringify(itemsArr));
+    populateList(itemsArr, uList);
+}
+
 inputForm.addEventListener('submit', addItem);
 uList.addEventListener('click', toggleDone);
+parag.addEventListener('click', clearSelection);
 
 populateList(itemsArr, uList);

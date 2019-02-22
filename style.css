@@ -36,6 +36,20 @@ h2 {
   font-weight: 200;
 }
 
+p {
+  margin: 15px 0px;
+  font-size: 11px;
+  display: flex;
+}
+
+.clearButton {
+  margin-right : 10px;
+  cursor: pointer;
+  padding: 8px;
+  background-color: #e6e7e8;
+  border: hidden;
+}
+
 .plates {
   margin: 0;
   padding: 0;
