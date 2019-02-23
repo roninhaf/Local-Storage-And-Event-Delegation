@@ -50,6 +50,13 @@ p {
   border: hidden;
 }
 
+.removeButton {
+  padding: 10px;
+  outline: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
 .plates {
   margin: 0;
   padding: 0;

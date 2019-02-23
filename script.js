@@ -1,20 +1,26 @@
+/* Defining our constants getting our elements */
 itemsArr = JSON.parse(localStorage.getItem('itemsArr')) || [];
 const uList = document.querySelector('.plates');
 const inputForm = document.querySelector('.add-items');
 const parag = document.querySelector('.wrapper p');
 const removeItemButton = document.createElement('button');
+removeItemButton.setAttribute('class', 'removeButton');
 const removeItemButtonText = document.createTextNode('Remove All Items');
 removeItemButton.appendChild(removeItemButtonText);
 const wrap = document.querySelector('.wrapper');
 
 
+/* Defining our functions */
 function addItem(a) {
+
     a.preventDefault();
     const text = (this.querySelector('[name=item]')).value;
+    
     item = {
         text,
         done : false
     };
+    
     itemsArr.push(item);
     populateList(itemsArr, uList);
     localStorage.setItem('itemsArr', JSON.stringify(itemsArr));
@@ -42,7 +48,9 @@ function populateList(anyArr = [], anyUl) {
 }
 
 function toggleDone(a) {
+    
     if(!a.target.matches('input')) return;
+
     const index = a.target.dataset.index;
     itemsArr[index].done = !itemsArr[index].done;
     localStorage.setItem('itemsArr', JSON.stringify(itemsArr));
@@ -50,16 +58,19 @@ function toggleDone(a) {
 }
 
 function clearSelection(a) {
+    
     if(!a.target.matches('button')) return;
+    
     itemsArr.forEach(element => {
         element.done = false;
     });
+
     localStorage.setItem('itemsArr', JSON.stringify(itemsArr));
     populateList(itemsArr, uList);
 }
 
 function removeAll() {
-    console.log('hello');
+    
     localStorage.removeItem('itemsArr');
     itemsArr = [];
     uList.innerHTML = '<li>Loading Tapas...</li>';
@@ -67,6 +78,8 @@ function removeAll() {
     wrap.removeChild(removeItemButton);
 }
 
+
+/* Hooking our listeners */
 inputForm.addEventListener('submit', addItem);
 uList.addEventListener('click', toggleDone);
 parag.addEventListener('click', clearSelection);
