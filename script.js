@@ -2,7 +2,11 @@ itemsArr = JSON.parse(localStorage.getItem('itemsArr')) || [];
 const uList = document.querySelector('.plates');
 const inputForm = document.querySelector('.add-items');
 const parag = document.querySelector('.wrapper p');
-// const clearBut = document.querySelector('.clearButton');
+const removeItemButton = document.createElement('button');
+const removeItemButtonText = document.createTextNode('Remove All Items');
+removeItemButton.appendChild(removeItemButtonText);
+const wrap = document.querySelector('.wrapper');
+
 
 function addItem(a) {
     a.preventDefault();
@@ -28,7 +32,13 @@ function populateList(anyArr = [], anyUl) {
     }).join('');
     
     if (anyArr.length > 0) {
-        parag.innerHTML = `<button class='clearButton'></button> Clear selection`;}
+        parag.innerHTML = `<button class='clearButton'></button> Clear selection`;
+        wrap.appendChild(removeItemButton);
+    }
+
+    if (anyArr.length === 0) {
+        uList.innerHTML = '<li>Loading Tapas...</li>';
+    }
 }
 
 function toggleDone(a) {
@@ -48,8 +58,18 @@ function clearSelection(a) {
     populateList(itemsArr, uList);
 }
 
+function removeAll() {
+    console.log('hello');
+    localStorage.removeItem('itemsArr');
+    itemsArr = [];
+    uList.innerHTML = '<li>Loading Tapas...</li>';
+    parag.innerHTML = '';
+    wrap.removeChild(removeItemButton);
+}
+
 inputForm.addEventListener('submit', addItem);
 uList.addEventListener('click', toggleDone);
 parag.addEventListener('click', clearSelection);
+removeItemButton.addEventListener('click', removeAll);
 
 populateList(itemsArr, uList);
