@@ -1,5 +1,7 @@
+"use strict";
+
 /* Defining our constants getting our elements */
-itemsArr = JSON.parse(localStorage.getItem('itemsArr')) || [];
+var itemsArr = JSON.parse(localStorage.getItem('itemsArr')) || [];
 const uList = document.querySelector('.plates');
 const inputForm = document.querySelector('.add-items');
 const parag = document.querySelector('.wrapper p');
@@ -11,12 +13,12 @@ const wrap = document.querySelector('.wrapper');
 
 
 /* Defining our functions */
-function addItem(a) {
+function addItem(event) {
 
-    a.preventDefault();
+    event.preventDefault();
     const text = (this.querySelector('[name=item]')).value;
     
-    item = {
+    const item = {
         text,
         done : false
     };
@@ -28,11 +30,11 @@ function addItem(a) {
 }
 
 function populateList(anyArr = [], anyUl) {
-    anyUl.innerHTML = anyArr.map((a,i) => {
+    anyUl.innerHTML = anyArr.map((arr,index) => {
         return `
         <li>
-        <input type="checkbox" data-index=${i} id="item${i}" ${a.done?'checked':''}>
-        <label for="item${i}">${a.text}</label>
+        <input type="checkbox" data-index=${index} id="item${index}" ${arr.done?'checked':''}>
+        <label for="item${index}">${arr.text}</label>
         </li>
         `;
     }).join('');
@@ -47,19 +49,19 @@ function populateList(anyArr = [], anyUl) {
     }
 }
 
-function toggleDone(a) {
+function toggleDone(event) {
     
-    if(!a.target.matches('input')) return;
+    if(!event.target.matches('input')) return;
 
-    const index = a.target.dataset.index;
+    const index = event.target.dataset.index;
     itemsArr[index].done = !itemsArr[index].done;
     localStorage.setItem('itemsArr', JSON.stringify(itemsArr));
     populateList(itemsArr, uList);
 }
 
-function clearSelection(a) {
+function clearSelection(event) {
     
-    if(!a.target.matches('button')) return;
+    if(!event.target.matches('button')) return;
     
     itemsArr.forEach(element => {
         element.done = false;
